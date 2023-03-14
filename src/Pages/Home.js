@@ -13,45 +13,37 @@ const Home = () => {
 
  
 
- 
+    const getDataByCategories =  async (id)=> {
+        const res = await fetch(`http://localhost:9001/products/bycategory/${id}`)
+        .then(res=> res.json());
+        setProductData(await res);
+        }
 
 
 
     async function getResponse(){
         const res = await fetch("http://localhost:9001/products")
                           .then(res=> res.json());
-                          setProductData(await res);
+                          const data = await res
+
+                          if (searchInput) {
+                            const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchInput.toLowerCase()));
+                            setProductData(filteredData);
+                          }else{
+                            setProductData(data);
+                          }
 
         const categoryRes = await fetch("http://localhost:9001/categories")
                           .then(res=> res.json());
+                          
                           setCategoriesData(await categoryRes);
     }
-    async function getSearchRes (){
-        const res = await fetch("http://localhost:9001/products")
-        .then(res=> res.json());
-        const data = await res
-        const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchInput.toLowerCase()));
-        setProductData(filteredData)
 
-    }
 
-   const getDataByCategories =  async (id)=> {
-    const res = await fetch(`http://localhost:9001/products/bycategory/${id}`)
-    .then(res=> res.json());
-    setProductData(await res);
-    }
+  
     // https://fakestoreapi.com/products
     useEffect(()=>{
-        
-        if(searchInput){
-            getSearchRes()
-
-        }else{
             getResponse()
-        }
-        
-       
-
         
     },[searchInput]);
 
