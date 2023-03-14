@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useThemeHook } from '../GlobalComponents/ThemeProvider';
-import { BiCategoryAlt, BiSearch } from 'react-icons/bi';
+import {  BiSearch } from 'react-icons/bi';
 import SearchFilter from 'react-filter-search';
 import ProductCard from '../components/ProductCard';
 
@@ -11,8 +11,10 @@ const Home = () => {
     const [productData, setProductData] = useState([]);
     const [categotiesData, setCategoriesData] = useState([]);
 
+    console.log(searchInput)
+
     async function getResponse(){
-        const res = await fetch("http://localhost:9001/products/bycategory/1")
+        const res = await fetch("http://localhost:9001/products")
                           .then(res=> res.json());
                           setProductData(await res);
 
