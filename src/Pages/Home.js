@@ -35,7 +35,7 @@ const Home = () => {
     },[]);
 
     const handleCategories = (id)=>{
-        getDataByCategories(id)
+       id ?  getDataByCategories(id) : getResponse();
 
     }
 
@@ -62,6 +62,7 @@ const Home = () => {
                 <h3 className='text-center pb-2'>Filtered By</h3>
                 <Row>
                     <Col className='text-center mb-4'>
+                    <Button onClick={()=> handleCategories()} className='mx-2' variant="secondary">All</Button>
                     {
                         categotiesData?.map((category,i)=> <Button onClick={()=> handleCategories(category.id)} className='mx-2' key={i} variant="secondary">{category.name}</Button> )
                     }
