@@ -6,18 +6,21 @@ import 'react-lightbox-component/build/css/index.css';
 import './product-details.css';
 import { useCart } from 'react-use-cart';
 import { BsCartPlus } from 'react-icons/bs';
+import {  useParams } from '@reach/router';
 
-const ProductDetails = (props) => {
+const ProductDetails = () => {
+    const {productId} = useParams()
+    console.log(productId)
     const [productData, setProductData] = useState([]);
     const [theme] = useThemeHook();
     const { addItem } = useCart();
 
     useEffect(()=>{
-        getResponse();
-    },[]);
+        getResponse(productId);
+    },[productId]);
 
-    const getResponse = async()=>{
-        const res = await fetch(`http://localhost:9001/products/${props.productId}`)
+    const getResponse = async(id)=>{
+        const res = await fetch(`http://localhost:9001/products/${id}`)
                           .then(res=> res.json());
                           setProductData(await res);
     }

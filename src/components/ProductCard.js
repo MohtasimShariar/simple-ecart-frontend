@@ -36,6 +36,7 @@ const ProductCard = (props) => {
                 <Card.Title>
                     BDT. <span className="h3">{price}</span>
                 </Card.Title>
+                
                 <Button
                     onClick={()=> addToCart()}
                     className={`${theme? 'bg-dark-primary text-black':'bg-light-primary' } d-flex align-item-center m-auto border-0`}
@@ -43,6 +44,7 @@ const ProductCard = (props) => {
                     <BsCartPlus size="1.8rem" />
                     Add to cart
                 </Button>
+                <Link to={`/product-details/${id}`}>Details</Link>
             </Card.Body>
         </Card>
     );

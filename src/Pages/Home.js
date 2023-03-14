@@ -11,7 +11,11 @@ const Home = () => {
     const [productData, setProductData] = useState([]);
     const [categotiesData, setCategoriesData] = useState([]);
 
-    console.log(searchInput)
+ 
+
+ 
+
+
 
     async function getResponse(){
         const res = await fetch("http://localhost:9001/products")
@@ -22,6 +26,14 @@ const Home = () => {
                           .then(res=> res.json());
                           setCategoriesData(await categoryRes);
     }
+    async function getSearchRes (){
+        const res = await fetch("http://localhost:9001/products")
+        .then(res=> res.json());
+        const data = await res
+        const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchInput.toLowerCase()));
+        setProductData(filteredData)
+
+    }
 
    const getDataByCategories =  async (id)=> {
     const res = await fetch(`http://localhost:9001/products/bycategory/${id}`)
@@ -30,16 +42,25 @@ const Home = () => {
     }
     // https://fakestoreapi.com/products
     useEffect(()=>{
-        getResponse();
         
-    },[]);
+        if(searchInput){
+            getSearchRes()
+
+        }else{
+            getResponse()
+        }
+        
+       
+
+        
+    },[searchInput]);
 
     const handleCategories = (id)=>{
        id ?  getDataByCategories(id) : getResponse();
 
     }
 
-    console.log(categotiesData)
+
 
     return (
         <Container className="py-4">
