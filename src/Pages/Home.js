@@ -20,11 +20,23 @@ const Home = () => {
                           .then(res=> res.json());
                           setCategoriesData(await categoryRes);
     }
+
+   const getDataByCategories =  async (id)=> {
+    const res = await fetch(`http://localhost:9001/products/bycategory/${id}`)
+    .then(res=> res.json());
+    setProductData(await res);
+    }
     // https://fakestoreapi.com/products
     useEffect(()=>{
         getResponse();
         
     },[]);
+
+    const handleCategories = (id)=>{
+        getDataByCategories(id)
+
+    }
+
     console.log(categotiesData)
 
     return (
@@ -49,7 +61,7 @@ const Home = () => {
                 <Row>
                     <Col className='text-center mb-4'>
                     {
-                        categotiesData?.map((category,i)=> <Button className='mx-2' key={i} variant="secondary">{category.name}</Button> )
+                        categotiesData?.map((category,i)=> <Button onClick={()=> handleCategories(category.id)} className='mx-2' key={i} variant="secondary">{category.name}</Button> )
                     }
                     </Col>
                 </Row>
