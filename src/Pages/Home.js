@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap';
+import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useThemeHook } from '../GlobalComponents/ThemeProvider';
-import { BiSearch } from 'react-icons/bi';
+import { BiCategoryAlt, BiSearch } from 'react-icons/bi';
 import SearchFilter from 'react-filter-search';
 import ProductCard from '../components/ProductCard';
 
@@ -9,16 +9,23 @@ const Home = () => {
     const [theme] = useThemeHook();
     const [searchInput, setSearchInput] = useState('');
     const [productData, setProductData] = useState([]);
+    const [categotiesData, setCategoriesData] = useState([]);
 
     async function getResponse(){
-        const res = await fetch("http://localhost:9001/products")
+        const res = await fetch("http://localhost:9001/products/bycategory/1")
                           .then(res=> res.json());
                           setProductData(await res);
+
+        const categoryRes = await fetch("http://localhost:9001/categories")
+                          .then(res=> res.json());
+                          setCategoriesData(await categoryRes);
     }
     // https://fakestoreapi.com/products
     useEffect(()=>{
         getResponse();
+        
     },[]);
+    console.log(categotiesData)
 
     return (
         <Container className="py-4">
@@ -37,6 +44,17 @@ const Home = () => {
                         />
                     </InputGroup>
                 </Col>
+                {/* filter buttons */}
+                <h3 className='text-center pb-2'>Filtered By</h3>
+                <Row>
+                    <Col className='text-center mb-4'>
+                    {
+                        categotiesData?.map((category,i)=> <Button className='mx-2' key={i} variant="secondary">{category.name}</Button> )
+                    }
+                    </Col>
+                </Row>
+
+                {/* filter Products */}
                 <SearchFilter 
                     value={searchInput}
                     data={productData}
