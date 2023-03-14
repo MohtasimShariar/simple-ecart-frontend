@@ -74,9 +74,14 @@ const Home = () => {
                     data={productData}
                     renderResults={results =>(
                         <Row className="justify-content-center">
-                            {results.map((item, i)=>(
+                           
+                            {results.map((item, i)=>(  <Col md="4">
                                 <ProductCard data={item} key={i} />
+                                </Col>
                             ))}
+                                
+                            
+                           
                         </Row>
                     )}
                 />

@@ -15,7 +15,7 @@ const ProductCard = (props) => {
     }
     return (
         <Card 
-            style={{ width: '18rem', height: 'auto' }}
+            style={{  height: 'auto' }}
             className={`${theme? 'bg-light-black text-light':'bg-lihgt text-black'} text-center p-0 overflow-hidden shadow mx-auto mb-4`}
         >
             <Link to={`/product-details/${id}`}>
