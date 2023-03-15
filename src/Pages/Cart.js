@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Container, Col, Row, Table} from 'react-bootstrap';
 import { useCart } from 'react-use-cart';
 import { useThemeHook } from '../GlobalComponents/ThemeProvider';
-import { BsCartCheck, BsCartX} from 'react-icons/bs';
+import { BsCart, BsCartCheck, BsCartX} from 'react-icons/bs';
 
 const Cart = () => {
     const [theme] = useThemeHook();
@@ -69,8 +69,8 @@ const Cart = () => {
                             <Button variant="success"
                                 className="m-2"
                             >
-                                <BsCartCheck size="1.7rem" />
-                                Clear Cart
+                                <BsCart size="1.7rem" />
+                               Place Order
                             </Button>
                         </Col>
                     </Row>}
