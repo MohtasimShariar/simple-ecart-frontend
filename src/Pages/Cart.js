@@ -25,6 +25,7 @@ const Cart = () => {
                         {items.map((item, index)=>{
                             return(
                                 <tr key={index}>
+                                    
                                     <td>
                                         <div style={{ background: 'white', height: '8rem', overflow: 'hidden', display: 'flex',
                                         justifyContent: 'center', alignItems: 'center' }}>
