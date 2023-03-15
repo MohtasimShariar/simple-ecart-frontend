@@ -5,13 +5,14 @@ import { useCart } from 'react-use-cart';
 import { BsCartPlus } from 'react-icons/bs';
 import { Link } from  "@reach/router";
 
-const ProductCard = (props) => {
-    let { image, price, title,categoryId, id} = props.data;
+const ProductCard = ({data}) => {
+    let { image, price, title, id,category} = data;
+   
     const [theme] = useThemeHook();
     const { addItem } = useCart();
 
     const addToCart = () =>{
-        addItem(props.data);
+        addItem(data);
     }
     return (
         <Card 
@@ -31,7 +32,7 @@ const ProductCard = (props) => {
                     {title}
                 </Card.Title>
                 <Card.Title>
-                Category <span className="h3">{categoryId}</span>
+                Category <span className="h3  text-capitalize">{category.name}</span>
                 </Card.Title>
                 <Card.Title>
                     BDT. <span className="h3">{price}</span>
