@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { useThemeHook } from '../GlobalComponents/ThemeProvider';
-import { BiCategoryAlt, BiSearch } from 'react-icons/bi';
+import {  BiSearch } from 'react-icons/bi';
 import SearchFilter from 'react-filter-search';
 import ProductCard from '../components/ProductCard';
 
@@ -11,14 +11,28 @@ const Home = () => {
     const [productData, setProductData] = useState([]);
     const [categotiesData, setCategoriesData] = useState([]);
 
+ 
+
+ 
+
+
+
     async function getResponse(){
-        const res = await fetch("http://localhost:9001/products/bycategory/1")
+        const res = await fetch("http://localhost:9001/products")
                           .then(res=> res.json());
                           setProductData(await res);
 
         const categoryRes = await fetch("http://localhost:9001/categories")
                           .then(res=> res.json());
                           setCategoriesData(await categoryRes);
+    }
+    async function getSearchRes (){
+        const res = await fetch("http://localhost:9001/products")
+        .then(res=> res.json());
+        const data = await res
+        const filteredData = data.filter((item) => item.name.toLowerCase().includes(searchInput.toLowerCase()));
+        setProductData(filteredData)
+
     }
 
    const getDataByCategories =  async (id)=> {
@@ -28,16 +42,25 @@ const Home = () => {
     }
     // https://fakestoreapi.com/products
     useEffect(()=>{
-        getResponse();
         
-    },[]);
+        if(searchInput){
+            getSearchRes()
+
+        }else{
+            getResponse()
+        }
+        
+       
+
+        
+    },[searchInput]);
 
     const handleCategories = (id)=>{
-        getDataByCategories(id)
+       id ?  getDataByCategories(id) : getResponse();
 
     }
 
-    console.log(categotiesData)
+
 
     return (
         <Container className="py-4">
@@ -60,6 +83,7 @@ const Home = () => {
                 <h3 className='text-center pb-2'>Filtered By</h3>
                 <Row>
                     <Col className='text-center mb-4'>
+                    <Button onClick={()=> handleCategories()} className='mx-2' variant="secondary">All</Button>
                     {
                         categotiesData?.map((category,i)=> <Button onClick={()=> handleCategories(category.id)} className='mx-2' key={i} variant="secondary">{category.name}</Button> )
                     }
@@ -72,9 +96,14 @@ const Home = () => {
                     data={productData}
                     renderResults={results =>(
                         <Row className="justify-content-center">
-                            {results.map((item, i)=>(
+                           
+                            {results.map((item, i)=>(  <Col md="4">
                                 <ProductCard data={item} key={i} />
+                                </Col>
                             ))}
+                                
+                            
+                           
                         </Row>
                     )}
                 />
